@@ -9,6 +9,8 @@ class PotluckTest < Minitest::Test
   def setup
     @couscous_salad = Dish.new("Couscous Salad", :appetizer)
     @cocktail_meatballs = Dish.new("Cocktail Meatballs", :entre)
+    @summer_pizza = Dish.new("Summer Pizza", :appetizer)
+    @roast_pork = Dish.new("Roast Pork", :entre)
   end
 
   def test_that_it_exists
@@ -44,6 +46,38 @@ class PotluckTest < Minitest::Test
     potluck.add_dish(@cocktail_meatballs)
 
     assert_equal 2, potluck.dishes.count
+  end
+
+  def test_that_all_dishes_can_be_shown_by_category
+    potluck = Potluck.new("7-13-18")
+    potluck.add_dish(@couscous_salad)
+    potluck.add_dish(@cocktail_meatballs)
+    potluck.add_dish(@summer_pizza)
+
+    assert_equal [@couscous_salad, @summer_pizza], potluck.get_all_from_category(:appetizer)
+    assert_equal [@cocktail_meatballs], potluck.get_all_from_category(:entre)
+  end
+
+  def test_that_you_can_find_first_dish_item_of_the_category
+    potluck = Potluck.new("7-13-18")
+    potluck.add_dish(@couscous_salad)
+    potluck.add_dish(@cocktail_meatballs)
+    potluck.add_dish(@summer_pizza)
+    potluck.add_dish(@roast_pork)
+
+    assert_equal @couscous_salad, potluck.get_all_from_category(:appetizer).first
+    assert_equal @cocktail_meatballs, potluck.get_all_from_category(:entre).first
+  end
+
+  def test_that_you_can_get_the_name_of_the_fist_dish_of_the_category
+    potluck = Potluck.new("7-13-18")
+    potluck.add_dish(@couscous_salad)
+    potluck.add_dish(@cocktail_meatballs)
+    potluck.add_dish(@summer_pizza)
+    potluck.add_dish(@roast_pork)
+
+    assert_equal "Couscous Salad", potluck.get_all_from_category(:appetizer).first.name
+    assert_equal "Cocktail Meatballs", potluck.get_all_from_category(:entre).first.name
   end
 
 end
