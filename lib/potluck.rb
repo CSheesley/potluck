@@ -10,8 +10,10 @@ class Potluck
     @dishes << add_dish_arg
   end
 
-
-
-
+  def get_all_from_category(category_arg)
+    @dishes.select do |dish|
+      dish.category == category_arg
+    end
+  end
 
 end
